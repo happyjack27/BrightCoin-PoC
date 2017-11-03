@@ -8,8 +8,10 @@ import java.util.Base64;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class RsaExample {
+	public static String CIPHER = "RSA";
+	
     public static KeyPair generateKeyPair() throws Exception {
-        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+        KeyPairGenerator generator = KeyPairGenerator.getInstance(CIPHER);
         generator.initialize(2048, new SecureRandom());
         KeyPair pair = generator.generateKeyPair();
 
@@ -35,23 +37,40 @@ public class RsaExample {
 
         return new KeyPair(publicKey, privateKey);
     }
-
-    public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
-        Cipher encryptCipher = Cipher.getInstance("RSA");
-        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
-
-        byte[] cipherText = encryptCipher.doFinal(plainText.getBytes(UTF_8));
-
-        return Base64.getEncoder().encodeToString(cipherText);
+    
+    //base64
+    public static String toBase64(byte[] s) {
+    	return Base64.getEncoder().encodeToString(s);
+    }
+    public static byte[] fromBase64(String s) {
+    	return Base64.getDecoder().decode(s);
+    }
+    
+    
+    //replication confirmation
+    public static byte[] encrypt(byte[] plainText, PrivateKey privateKey) throws Exception {
+        Cipher encryptCipher = Cipher.getInstance(CIPHER);
+        encryptCipher.init(Cipher.ENCRYPT_MODE, privateKey);
+        return encryptCipher.doFinal(plainText);
     }
 
-    public static String decrypt(String cipherText, PrivateKey privateKey) throws Exception {
-        byte[] bytes = Base64.getDecoder().decode(cipherText);
+    public static byte[] decrypt(byte[] cipherText, PublicKey publicKey) throws Exception {
+        Cipher decriptCipher = Cipher.getInstance(CIPHER);
+        decriptCipher.init(Cipher.DECRYPT_MODE, publicKey);
+        return decriptCipher.doFinal(cipherText);
+    }
 
-        Cipher decriptCipher = Cipher.getInstance("RSA");
+    //original
+    public static byte[] encrypt(byte[] plainText, PublicKey publicKey) throws Exception {
+        Cipher encryptCipher = Cipher.getInstance(CIPHER);
+        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        return encryptCipher.doFinal(plainText);
+    }
+
+    public static byte[] decrypt(byte[] cipherText, PrivateKey privateKey) throws Exception {
+        Cipher decriptCipher = Cipher.getInstance(CIPHER);
         decriptCipher.init(Cipher.DECRYPT_MODE, privateKey);
-
-        return new String(decriptCipher.doFinal(bytes), UTF_8);
+        return decriptCipher.doFinal(cipherText);
     }
 
     public static String sign(String plainText, PrivateKey privateKey) throws Exception {
@@ -81,14 +100,17 @@ public class RsaExample {
 
         //Our secret message
         String message = "the answer to life the universe and everything";
+        System.out.println("private: "+toBase64(pair.getPrivate().getEncoded()));
+        System.out.println("public: "+toBase64(pair.getPublic().getEncoded()));
 
-        //Encrypt the message
-        String cipherText = encrypt(message, pair.getPublic());
-
-        //Now decrypt it
-        String decipheredMessage = decrypt(cipherText, pair.getPrivate());
-
+        byte[] cipherText = encrypt(message.getBytes(), pair.getPublic());
+        String decipheredMessage = new String(decrypt(cipherText, pair.getPrivate()));
         System.out.println(decipheredMessage);
+
+        //reversed.
+        byte[] cipherText2 = encrypt(message.getBytes(), pair.getPrivate());
+        String decipheredMessage2 = new String(decrypt(cipherText2, pair.getPublic()));
+        System.out.println(decipheredMessage2);
 
         //Let's sign our message
         String signature = sign("foobar", pair.getPrivate());

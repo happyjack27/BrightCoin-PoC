@@ -7,17 +7,19 @@ public class TestCheckSum {
 
   public static void main(String args[]) throws Exception {
 
-    String datafile = "c:\\INSTLOG.TXT";
+    //String datafile = "c:\\INSTLOG.TXT";
 
     MessageDigest md = MessageDigest.getInstance("SHA1");
+    md.update("this is a test string".getBytes());
+    
+    /*
     FileInputStream fis = new FileInputStream(datafile);
     byte[] dataBytes = new byte[1024];
-
     int nread = 0;
-
     while ((nread = fis.read(dataBytes)) != -1) {
       md.update(dataBytes, 0, nread);
     };
+    */
 
     byte[] mdbytes = md.digest();
 
