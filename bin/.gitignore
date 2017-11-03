@@ -1,0 +1,10 @@
+/StorageEngine.class
+/Validator.class
+/PeerEngine.class
+/serialization/
+/validation/
+/cryptography/
+/networking/
+/wallet/
+/commandProcessor/
+/storage/
