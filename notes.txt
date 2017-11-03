@@ -94,6 +94,13 @@ validate transaction history of other party before receiving or sending
 
 (sign by concatenating APPROVE or REJECT)
 
+tx hash tables:
+by from sig
+by to sig
+by from address (partial)
+by to address (partial)
+by tx time
+
 transactions can be signed by a contract
 account {
 	address:
