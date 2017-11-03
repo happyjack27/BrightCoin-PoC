@@ -14,6 +14,8 @@ public class TxValidator {
 	// the receipt transaction number is then chosen when signed by reciever.
 	// how to ack/return a decline? 
 	
+	//there's a send sequence, and a total sequence.  the earliest sent coin is used up (confirmed) first.
+	
 	//bitcoin rules:
 	//https://www.cryptocompare.com/coins/guides/how-does-a-bitcoin-node-verify-a-transaction/
 	
@@ -31,35 +33,6 @@ public class TxValidator {
 	number of trusted store replications 
 	*/
 
-	public String validateStructure(JsonMap tx, JsonMap template, String prefix) {
-		Vector<String> missing = new Vector<String>();
-		for( Entry<String,Object> e : template.entrySet()) {
-			String key = e.getKey();
-			if( !tx.containsKey(key)) {
-				missing.add(prefix+key);
-			} else {
-				
-				Object txo = tx.get(key);
-				if(e.getValue() instanceof aJsonMap) {
-					JsonMap o = (JsonMap)e.getValue();
 
-				} else 
-				if(e.getValue() instanceof Collection) {
-					Collection<Object> v = (Collection<Object>)e.getValue();
-				} else 
-				if(e.getValue() instanceof String) {
-					String o = (String)e.getValue();			
-				} else {
-					
-				}
-			}
-		}
-		
-		if( missing.size() > 0) {
-			
-		}
-		
-		return "OK";
-	}
 
 }
