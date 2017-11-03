@@ -1,0 +1,158 @@
+
+global ledger keyed by time: time,hash
+ledgers automatically rent storage
+and you can provide storage
+
+coins distributed as storage reward.
+people are incentivized to rent storate as without it they cannot spend
+
+how to distribute money:
+start with an account that just rents storage - throw away the key
+also proram into the code that that account cannot buy anything, can only rent
+-- oh, ability to freeze funds!
+
+"secured identity"
+
+"redundant micro-chains"
+a micro-chain is an ordered and time-stamped list of transactions between 2 parties.  
+thus if there are N addresses, there are NxN possible micro-chains.
+the top of the chain always includes the total transmitted each way between the two parties.
+the security of the chain is enforced both by rules of validity - for example all transactions must be signed by both parties
+and provable storage of numerous copies of the transaction history across the internet
+both of which are audited periodically.
+storage audit also includes "proof of replication" which protects against sybil attacks.
+additionally audits are audited by introducing a known number of items that should fail the audit.
+coins are distributed by owner-less seed accounts that have smart contracts that periodically pay for audits.
+
+* unlimited transactions speed
+* unlimited transaction rate
+* power-efficient validation
+* full traceability / auditability
+* fully fungible
+* no ICO and no mining
+
+
+
+proof of storage audit
+proof of validity audit
+proof of audit audit
+proof of storage (send random copies)
+proof of replication can be done by storing an encrypted version + the public (decryption) key (send random encrypted copies)
+
+a ledger for bad entries
+
+torrent sharers share all ledgers via torrent.
+
+transaction volume can not exceed 8x share volume
+stored volume - proof of storage?
+storage must be availalbe - proof of availability
+maybe just pay based on amount of data provided
+
+https://en.wikipedia.org/wiki/Proof-of-space
+https://filecoin.io/proof-of-replication.pdf
+https://www.sia.tech/whitepaper.pdf
+https://bitcointalk.org/index.php?topic=486359.0
+https://filecoin.io/filecoin.pdf
+https://storj.io/
+https://counterparty.io/
+
+
+the reason for bitcoin is to keep an order of transactions
+need to do without equiring proof of work
+
+this can be done with separate micro ledgers
+
+based on civic id
+
+transaction volume determines security
+
+civic id public keys must be on the transactions
+
+each one keeps their own ledger, 
+and registered with two storage partners.
+
+each transaction includes the next available number on each ledger and a timestamp approved by both parties.
+for each transaction you make you need to store 7x the volume of other transactions.
+
+conflicts are resolved by voting.
+
+validity requires: 
+both parties have ledger entry in their ledger
+both signatures are valid
+balance comes out right.
+resulting balances are non-zero
+
+numbers are fixed precision
+
+validation -- all?  8x transaction volume?
+
+validate lower transaction voume validation ratio first?  most recent first?
+
+max transaction size?
+
+validate transaction history of other party before receiving or sending
+
+(sign by concatenating APPROVE or REJECT)
+
+transactions can be signed by a contract
+account {
+	address:
+	civic_id:
+	civic_id_sig:
+	last_sig:
+	ledger_size:
+	total_transacted:
+	balance:
+}
+
+
+validations [
+	address:
+	signature:
+],
+
+signatures [
+	address:
+	signature:
+	action:
+	time:
+],
+tx {
+	tx_hash:
+	tx_time:
+	from_addres:
+	to_address:
+	joint_sequence:
+	amount:
+	created:
+	expires:
+	from {
+		sequence:
+		last_sig:
+		balance:
+		total_rcvd:
+		last_trans_seq:
+		last_trans_sig:
+	},
+	to {
+		sequence:
+		last_sig:
+		balance:
+		total_rcvd:
+		last_trans_seq:
+		last_trans_sig:
+	}
+	memo:
+}
+contract {
+	start sig
+	end sig
+	repeat interval
+	amount
+}
+offer {
+}
+
+distribution: 1 coin per civic id
+distribution: seed account with periodic pay for audit (a seed account per audit type)
+
